@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'pages#index'
-  resources :users
+  resources :users, :boards
 
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin'                  => 'sessions#new',     :as => :signin
