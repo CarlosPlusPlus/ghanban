@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.2.0'
 
 gem 'annotate',        '2.6.5'
 gem 'figaro',          '1.1.0'
@@ -35,22 +34,22 @@ gem 'unicorn-rails', '2.2.0'
 # Dev / Test Tools #
 ####################
 
-group :development, :test do
-  gem 'better_errors',      '2.1.1'
+group :development do
+  gem 'better_errors',     '2.1.1'
   gem 'binding_of_caller', '0.7.2'
-  gem 'jazz_hands', github: 'jkrmr/jazz_hands'
+end
 
+group :development, :test do
   gem 'capybara',           '2.4.4'
   gem 'factory_girl_rails', '4.5.0'
   gem 'rspec-rails',        '3.2.0'
 
-  gem 'database_cleaner',      '1.4.0'
-  gem 'faker',                 '1.4.3'
-  gem 'guard-bundler',         '2.1.0'
-  gem 'guard-rails',           '0.7.1'
-  gem 'guard-rspec',           '4.5.0'
-  gem 'launchy',               '2.4.3'
-  gem 'quiet_assets',          '1.1.0'
-  gem 'spring',                '1.3.2'
-  gem 'spring-commands-rspec', '1.0.4'
+  gem 'database_cleaner', '1.4.0'
+  gem 'faker',            '1.4.3'
+  gem 'guard-bundler',    '2.1.0'
+  gem 'guard-rails',      '0.7.1'
+  gem 'guard-rspec',      '4.5.0'
+  gem 'jazz_fingers',     '1.0.0'
+  gem 'launchy',          '2.4.3'
+  gem 'quiet_assets',     '1.1.0'
 end
