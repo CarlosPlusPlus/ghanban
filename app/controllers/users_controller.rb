@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def index
     @boards = current_user.boards
+    @repos = octokit_client.repos
   end
 
   def show

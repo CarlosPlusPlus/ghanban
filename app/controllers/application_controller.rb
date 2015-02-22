@@ -31,4 +31,12 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def setup_octokit_client(auth_token)
+      @octokit_client ||= Octokit::Client.new(:access_token => auth_token)
+    end
+
+    def octokit_client
+      @octokit_client
+    end
+
 end
