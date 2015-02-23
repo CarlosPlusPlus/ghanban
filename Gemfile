@@ -47,10 +47,6 @@ group :development, :test do
 
   gem 'database_cleaner', '1.4.0'
   gem 'faker',            '1.4.3'
-  gem 'guard-bundler',    '2.1.0'
-  gem 'guard-rails',      '0.7.1'
-  gem 'guard-rspec',      '4.5.0'
   gem 'jazz_fingers',     '1.0.0'
-  gem 'launchy',          '2.4.3'
   gem 'quiet_assets',     '1.1.0'
 end
