@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'pages#index'
-  resources :users, :boards
+
+  resources :boards, only: [:create, :new]
+  resources :users,  only: [:create, :show]
 
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin'                  => 'sessions#new',     :as => :signin
