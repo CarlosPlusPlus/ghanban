@@ -3,11 +3,11 @@ class UsersController < ApplicationController
   before_action :correct_user?, :except => [:index]
 
   def index
-    @boards = current_user.boards
-    @repos  = octokit.repos.collect(&:full_name)
   end
 
   def show
-    @user = User.find(params[:id])
+    @user   = current_user || User.find(params[:id])
+    @boards = current_user.boards
+    @repos  = octokit.repos.collect(&:full_name)
   end
 end

@@ -11,15 +11,15 @@ class SessionsController < ApplicationController
     session[:user_id]      = user.id
     session[:access_token] = auth['credentials']['token']
 
-    redirect_to users_url, :notice => 'Signed in!'
+    redirect_to user_path(user.id), notice: 'Signed in!'
   end
 
   def destroy
     reset_session
-    redirect_to root_url, :notice => 'Signed out!'
+    redirect_to root_url, notice: 'Signed out!'
   end
 
   def failure
-    redirect_to root_url, :alert => "Authentication Error: #{params[:message].humanize}"
+    redirect_to root_url, alert: "Authentication Error: #{params[:message].humanize}"
   end
 end

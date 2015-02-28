@@ -16,9 +16,9 @@ describe SessionsController, :omniauth do
       expect(session[:access_token]).not_to be_nil
     end
 
-    it 'redirects to the users page' do
+    it 'redirects to the users show page' do
       post :create, provider: :github
-      expect(response).to redirect_to users_url
+      expect(response).to redirect_to user_path(session[:user_id])
     end
   end
 
