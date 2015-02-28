@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'annotate',        '2.6.5'
 gem 'figaro',          '1.1.0'
 gem 'jbuilder',     '~> 2.0'
 gem 'octokit',      '~> 3.0'

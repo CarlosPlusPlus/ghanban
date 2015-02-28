@@ -3,13 +3,13 @@ module Omniauth
   module Mock
     def auth_mock
       OmniAuth.config.mock_auth[:github] = {
-        'provider' => 'github',
-        'uid' => '123545',
-        'user_info' => {
-          'name' => 'mockuser'
+        'uid'  => '123545',
+        'info' => {
+          'name'     => 'mock_name',
+          'username' => 'mock_username'
         },
         'credentials' => {
-          'token' => 'mock_token',
+          'token'  => 'mock_token',
           'secret' => 'mock_secret'
         }
       }

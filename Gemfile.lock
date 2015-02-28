@@ -37,9 +37,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.7)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     arel (6.0.0)
     awesome_print (1.6.1)
     better_errors (2.1.1)
@@ -275,7 +272,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate (= 2.6.5)
   better_errors (= 2.1.1)
   binding_of_caller (= 0.7.2)
   capybara (= 2.4.4)
