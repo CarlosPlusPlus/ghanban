@@ -1,5 +1,5 @@
 <%= form_for :board, url: boards_path do |f| %>
-  Name: <%= f.text_field :name %><br />
+  Name: <%= f.text_field :name, required: true %><br />
   <% @repos.each do |repo| %>
     <div>
       <%= f.label repo, style: 'display: inline;' %>

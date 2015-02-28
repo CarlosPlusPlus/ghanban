@@ -1,1 +1,13 @@
-show.html.erb
+<h1>Board: <%= @board.name %></h1>
+
+<% @board.users.each do |user| %>
+  <h2>User: <%= user.username %></h2>
+<% end %>
+
+<% @board.repos.each do |repo| %>
+  <h2>Repo: <%= repo.name %></h2>
+
+  <% repo.issues.each do |issue| %>
+    <p>Issue: <%= issue.name %></p>
+  <% end %>
+<% end %>

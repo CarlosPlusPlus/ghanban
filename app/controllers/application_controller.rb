@@ -32,6 +32,6 @@ class ApplicationController < ActionController::Base
     end
 
     def octokit
-      Octokit::Client.new(access_token: session[:access_token])
+      @client ||= Octokit::Client.new(access_token: session[:access_token])
     end
 end

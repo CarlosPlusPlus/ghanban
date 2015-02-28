@@ -4,4 +4,8 @@ class Repo < ActiveRecord::Base
 
   validates :name, presence: true
   validates :name, uniqueness: true
+
+  def add_issues(issues_hash)
+    issues_hash.each { |issue| self.issues << Issue.new(name: issue[:title]) }
+  end
 end
