@@ -1,1 +1,10 @@
-new.html.erb
+<%= form_for :board, url: boards_path do |f| %>
+  Name: <%= f.text_field :name %><br />
+  <% @repos.each do |repo| %>
+    <div>
+      <%= f.label repo, style: 'display: inline;' %>
+      <%= f.check_box('repos', { multiple: true }, repo, nil) %>
+    </div>
+  <% end %>
+  <%= f.submit %>
+<% end %>
