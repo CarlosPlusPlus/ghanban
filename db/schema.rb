@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150228221813) do
+ActiveRecord::Schema.define(version: 20150301165341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,10 +39,37 @@ ActiveRecord::Schema.define(version: 20150228221813) do
   add_index "boards_users", ["user_id"], name: "index_boards_users_on_user_id", using: :btree
 
   create_table "issues", force: :cascade do |t|
-    t.string   "name"
     t.integer  "repo_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "github_id"
+    t.integer  "number"
+    t.string   "title"
+    t.text     "body"
+    t.string   "url"
+    t.string   "html_url"
+    t.integer  "comments"
+    t.string   "comments_url"
+    t.datetime "github_created_at"
+    t.datetime "github_updated_at"
+    t.datetime "closed_at"
+    t.string   "organization"
+    t.string   "repo_name"
+    t.string   "state"
+    t.integer  "user_gh_id"
+    t.string   "user_gh_login"
+    t.integer  "assignee_gh_id"
+    t.string   "assignee_gh_login"
+    t.string   "assignee_avatar"
+    t.integer  "milestone_id"
+    t.string   "milestone_url"
+    t.string   "milestone_title"
+    t.string   "category"
+    t.string   "priority"
+    t.string   "status"
+    t.string   "team"
+    t.string   "type"
+    t.integer  "size"
   end
 
   create_table "repos", force: :cascade do |t|

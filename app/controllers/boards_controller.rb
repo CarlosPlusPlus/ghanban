@@ -15,7 +15,8 @@ class BoardsController < ApplicationController
 
     params['board']['repos'].collect do |name|
       repo = Repo.find_or_initialize_by(name: name)
-      repo.add_issues(@client.issues(name)) if repo.new_record?
+      @client.auto_paginate = true # grab all issues, not just the first 30
+      repo.add_issues(@client.issues(name, state: 'all')) if repo.new_record?
       @board.repos << repo
     end
     @board.users << current_user

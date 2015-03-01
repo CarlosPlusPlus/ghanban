@@ -8,6 +8,6 @@
   <h2>Repo: <%= repo.name %></h2>
 
   <% repo.issues.each do |issue| %>
-    <p>Issue: <%= issue.name %></p>
+    <p>Issue #<%= issue.number %>: <%= issue.title %></p>
   <% end %>
 <% end %>
