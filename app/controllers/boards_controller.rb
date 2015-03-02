@@ -12,16 +12,17 @@ class BoardsController < ApplicationController
 
   def create
     @board = Board.new(name: params[:name])
+    @board.users << current_user
+
+    @client.auto_paginate = true # Access to ALL issues.
 
     params['board']['repos'].collect do |name|
       repo = Repo.find_or_initialize_by(name: name)
-      @client.auto_paginate = true # grab all issues, not just the first 30
       repo.add_issues(@client.issues(name, state: 'all')) if repo.new_record?
       @board.repos << repo
     end
-    @board.users << current_user
-    @board.save
 
+    @board.save
     render action: 'show'
   end
 end
