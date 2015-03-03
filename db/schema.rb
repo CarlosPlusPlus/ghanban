@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301165341) do
+ActiveRecord::Schema.define(version: 20150303122625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,23 @@ ActiveRecord::Schema.define(version: 20150301165341) do
     t.string   "team"
     t.string   "type"
     t.integer  "size"
+  end
+
+  create_table "issues_labels", force: :cascade do |t|
+    t.integer "issue_id"
+    t.integer "label_id"
+  end
+
+  add_index "issues_labels", ["issue_id"], name: "index_issues_labels_on_issue_id", using: :btree
+  add_index "issues_labels", ["label_id"], name: "index_issues_labels_on_label_id", using: :btree
+
+  create_table "labels", force: :cascade do |t|
+    t.string   "name"
+    t.string   "color"
+    t.string   "url"
+    t.integer  "repo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "repos", force: :cascade do |t|
