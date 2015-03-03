@@ -4,7 +4,6 @@ class Issue < ActiveRecord::Base
 
   def add_labels(issue)
     if issue[:labels]
-      binding.pry
       repo_id = self.repo_id
       issue[:labels].each do |label|
         l = Label.find_or_create_by(
