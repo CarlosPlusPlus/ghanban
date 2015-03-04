@@ -14,6 +14,18 @@
     end
   end
 
+  def add_repo_labels(labels)
+    labels.each do |label|
+      l = Label.find_or_create_by(
+        repo_id: self.id, 
+        name: label[:name], 
+        url: label[:url], 
+        color: label[:color]
+      ) 
+      self.labels << l
+    end
+  end
+
   # [TODO] AJW // 2015-03-10
   # Add Label Logid, including custom label attributes below:
   #   issue_hash[:category]
