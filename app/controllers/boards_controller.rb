@@ -17,8 +17,9 @@ class BoardsController < ApplicationController
     @client.auto_paginate = true # Access to ALL issues.
 
     params['board']['repos'].collect do |name|
-      repo = Repo.find_or_initialize_by(name: name)
-      repo.add_issues(@client.issues(name, state: 'all')) if repo.new_record?
+      new_repo = Repo.where(name: name).length == 0
+      repo = Repo.where(name: name).first_or_create
+      repo.add_issues(@client.issues(name, state: 'all')) if new_repo
       @board.repos << repo
     end
 

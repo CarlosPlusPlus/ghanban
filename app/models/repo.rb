@@ -9,7 +9,7 @@
   def add_issues(issues_hash)
     issues_hash.each do |issue| 
       i = Issue.new(parse_issue(issue))
-      i.add_labels(issue)
+      i.add_labels(issue, self)
       self.issues << i
     end
   end
