@@ -3,16 +3,17 @@ class Issue < ActiveRecord::Base
   belongs_to :repo
 
   def add_labels(issue, repo)
-    if issue[:labels]
+    if labels = issue[:labels]
       repo_id = repo.id
-      issue[:labels].each do |label|
+
+      labels.each do |label|
         l = Label.find_or_create_by(
-          repo_id: repo_id, 
-          name: label[:name], 
-          url: label[:url], 
-          color: label[:color]
-        )
-      self.labels << l
+              :repo_id => repo_id,
+              :name    => label[:name],
+              :url     => label[:url],
+              :color   => label[:color]
+            )
+        self.labels << l
       end
     end
   end
