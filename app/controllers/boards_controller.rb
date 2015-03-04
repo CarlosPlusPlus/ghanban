@@ -11,7 +11,7 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = Board.new(name: params[:name])
+    @board = Board.new(name: params[:board][:name])
     @board.users << current_user
 
     @client.auto_paginate = true # Access to ALL issues.
