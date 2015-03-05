@@ -7,6 +7,12 @@
 <% @board.repos.each do |repo| %>
   <h2>Repo: <%= repo.name %></h2>
 
+  <h3>Labels</h3>
+  <% repo.labels.each do |label| %>
+    <p>Name: <%= label.name %>, Color: <%= label.color %></p>
+  <% end %>
+
+  <h3>Issues</h3>
   <% repo.issues.each do |issue| %>
     <p>Issue #<%= issue.number %>: <%= issue.title %></p>
   <% end %>
