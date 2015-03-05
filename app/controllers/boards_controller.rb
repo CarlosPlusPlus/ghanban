@@ -20,8 +20,7 @@ class BoardsController < ApplicationController
       repo = Repo.where(name: name).first_or_create { @new_repo = true }
 
       if @new_repo
-        labels = @client.labels(name)
-        repo.add_repo_labels(labels)
+        repo.add_repo_labels(@client.labels(name))
         repo.add_issues(@client.issues(name, state: 'all'))
         @new_repo = false
       end

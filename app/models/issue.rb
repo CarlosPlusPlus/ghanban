@@ -7,13 +7,12 @@ class Issue < ActiveRecord::Base
       repo_id = repo.id
 
       labels.each do |label|
-        l = Label.find_or_create_by(
-              :repo_id => repo_id,
-              :name    => label[:name],
-              :url     => label[:url],
-              :color   => label[:color]
-            )
-        self.labels << l
+        self.labels << Label.find_or_create_by(
+                         :repo_id => repo_id,
+                         :name    => label[:name],
+                         :url     => label[:url],
+                         :color   => label[:color]
+                       )
       end
     end
   end
