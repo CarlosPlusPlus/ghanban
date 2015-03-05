@@ -7,6 +7,11 @@ class Issue < ActiveRecord::Base
       repo_id = repo.id
 
       labels.each do |label|
+        label_type = label[:name].split(":").first
+        if ['category', 'priority', 'status', 'team', 'type', 'size'].include? label_type
+          self[label_type.to_sym] = label[:name].split(":").last.strip
+          self.save
+        end
         self.labels << Label.find_or_create_by(
                          :repo_id => repo_id,
                          :name    => label[:name],
