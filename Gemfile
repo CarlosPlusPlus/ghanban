@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'figaro',          '1.1.0'
+gem 'github_webhook',  '0.2.0'
 gem 'jbuilder',     '~> 2.0'
 gem 'octokit',      '~> 3.0'
 gem 'omniauth',        '1.2.2'
