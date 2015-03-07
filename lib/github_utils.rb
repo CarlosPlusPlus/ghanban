@@ -3,6 +3,16 @@ module GithubUtils
   # Split modules into individual files
 
   module Client
+    WEBHOOKS = ['issues', 'issue_comment']
+
+    def add_webhooks(repo)
+      WEBHOOKS.each { |wh| client.subscribe "https://github.com/#{repo.name}/events/#{wh}.json", callback_url, ENV['GITHUB_WEBHOOK_SECRET'] }
+    end
+
+    def callback_url
+      Rails.env.development? ? ENV['DEV_WEBHOOK_URL'] : ENV['PRD_WEBHOOK_URL']
+    end
+
     def get_labels(repo_name)
       client.labels(repo_name)
     end
