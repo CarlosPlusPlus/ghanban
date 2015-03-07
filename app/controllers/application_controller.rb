@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include GithubUtils
+  include GithubUtils::Client
 
   protect_from_forgery with: :exception
 
