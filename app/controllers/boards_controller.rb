@@ -1,10 +1,9 @@
 class BoardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :octokit, only: :create
 
   def new
     @user  = current_user
-    @repos = octokit.repos.collect(&:full_name)
+    @repos = get_repos.collect(&:full_name)
   end
 
   def show
@@ -14,21 +13,22 @@ class BoardsController < ApplicationController
     @board = Board.new(name: params[:board][:name])
     @board.users << current_user
 
-    @client.auto_paginate = true # Access to ALL issues.
-
-    params['board']['repos'].collect do |name|
-      repo = Repo.where(name: name).first_or_create { @new_repo = true }
-
-      if @new_repo
-        repo.add_repo_labels(@client.labels(name))
-        repo.add_issues(@client.issues(name, state: 'all'))
-        @new_repo = false
-      end
-
-      @board.repos << repo
-    end
+    params['board']['repos'].each { |repo_name| add_repo(repo_name) }
 
     @board.save
     render action: 'show'
   end
+
+  private
+    def add_repo(repo_name)
+      repo = Repo.where(name: repo_name).first_or_create { @new_repo = true }
+      initialize_new_repo(repo) if @new_repo
+      @board.repos << repo
+    end
+
+    def initialize_new_repo(repo)
+      repo.add_repo_labels(get_labels(repo.name))
+      repo.add_issues(get_issues(repo.name))
+      @new_repo = false
+    end
 end
