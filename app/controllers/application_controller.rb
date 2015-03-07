@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include GithubUtils
+
   protect_from_forgery with: :exception
 
   helper_method :correct_user?
@@ -29,9 +31,5 @@ class ApplicationController < ActionController::Base
 
     def user_signed_in?
       return true if current_user
-    end
-
-    def octokit
-      @client ||= Octokit::Client.new(access_token: session[:access_token])
     end
 end
