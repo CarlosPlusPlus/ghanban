@@ -29,6 +29,7 @@ class BoardsController < ApplicationController
     def initialize_new_repo(repo)
       repo.add_repo_labels(get_labels(repo.name))
       repo.add_issues(get_issues(repo.name))
+      add_webhook(repo)
       @new_repo = false
     end
 end

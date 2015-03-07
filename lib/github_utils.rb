@@ -3,6 +3,13 @@ module GithubUtils
   # Split modules into individual files
 
   module Client
+    def add_webhook(repo)
+      callback_url = 'http://ghanban.waxman.ultrahook.com/github_webhooks'
+      client.subscribe "https://github.com/#{repo.name}/events/issues.json", callback_url
+      client.subscribe "https://github.com/#{repo.name}/events/issue_comment.json", callback_url
+      # [TODO] Add webhook secret parameter
+    end
+
     def get_labels(repo_name)
       client.labels(repo_name)
     end

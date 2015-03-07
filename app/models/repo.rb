@@ -28,11 +28,4 @@
                      )
     end
   end
-
-  def add_webhook(client)
-    callback_url = "http://ghanban.waxman.ultrahook.com/github_webhooks"
-    client.subscribe "https://github.com/#{self.name}/events/issues.json", callback_url
-    client.subscribe "https://github.com/#{self.name}/events/issue_comment.json", callback_url
-    # [TODO] Add webhook secret parameter
-  end 
 end
