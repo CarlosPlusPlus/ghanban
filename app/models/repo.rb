@@ -27,15 +27,6 @@
     end
   end
 
-  # [TODO] AJW // 2015-03-10
-  # Add Label Logid, including custom label attributes below:
-  #   issue_hash[:category]
-  #   issue_hash[:priority]
-  #   issue_hash[:status]
-  #   issue_hash[:team]
-  #   issue_hash[:type]
-  #   issue_hash[:size]
-
   def parse_issue(issue)
     {
       :github_id         => issue[:id],
