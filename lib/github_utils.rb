@@ -8,7 +8,6 @@ module GithubUtils
     end
 
     def get_issues(repo_name)
-      client.auto_paginate = true # Access to ALL issues.
       client.issues(repo_name, state: 'all')
     end
 
@@ -19,6 +18,8 @@ module GithubUtils
     private
       def client
         @client ||= Octokit::Client.new(access_token: session[:access_token])
+        @client.auto_paginate = true
+        @client
       end
   end
 
