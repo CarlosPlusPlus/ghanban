@@ -3,7 +3,7 @@ class BoardsController < ApplicationController
 
   def new
     @user  = current_user
-    @repos = get_repos.collect(&:full_name)
+    @repos = get_repos.select { |repo| repo[:owner][:login] == current_user.username }.collect(&:full_name)
   end
 
   def show
@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
     def initialize_new_repo(repo)
       repo.add_repo_labels(get_labels(repo.name))
       repo.add_issues(get_issues(repo.name))
-      add_webhook(repo)
+      add_webhooks(repo)
       @new_repo = false
     end
 end

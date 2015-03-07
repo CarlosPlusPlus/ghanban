@@ -1,11 +1,14 @@
 class GithubWebhooksController < ActionController::Base
   include GithubWebhook::Processor
 
-  def push(payload)
-    # TODO: handle push webhook
+  def issues(payload)
+    puts 'I made it into the issue webhook action!'
+  end
+
+  def issue_comment(payload)
+    puts 'I made it into the issue_comment webhook action!'
   end
 
   def webhook_secret(payload)
-    ENV['GITHUB_WEBHOOK_SECRET']
   end
 end
