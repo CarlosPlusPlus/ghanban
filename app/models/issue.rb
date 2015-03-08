@@ -22,13 +22,13 @@ class Issue < ActiveRecord::Base
 
   private
     def add_custom_attribute(label)
-      label_type = label[:name].split(':').first
-        if ISSUE_CATEGORIES.include?(label_type)
-          label_type = 'issue_type' if label_type == 'type'
-          # [TODO] CJL // 2015-03-07
-          # Find a way to set attribute not using this notation.
-          self[label_type.to_sym] = label[:name].split(":").last.strip
-        end
+      label_type = label[:name].split(':').first      
+      if ISSUE_CATEGORIES.include?(label_type)
+        label_type = 'issue_type' if label_type == 'type'
+        # [TODO] CJL // 2015-03-07
+        # Find a way to set attribute not using this notation.
+        self[label_type.to_sym] = label[:name].split(":").last.strip
+      end
     end
 
 end
