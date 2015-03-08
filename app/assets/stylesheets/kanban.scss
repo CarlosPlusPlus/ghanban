@@ -3,19 +3,34 @@
 @import "wizardy";
 
 .kanban-page {
+  height: 100%;
+  overflow: hidden;
   main {
     padding: 0;
+    height: 100%;
   }
 }
 
 .column-wrapper {
   @extend %grid;
+  height: 100%;
 }
 
 .column-wrapper .column {
   @extend %grid__item;
   @extend %one-quarter;
-  background: #fff;
-  border: 1px solid #ccc;
-  min-height: 500px;
+  background: #f7f8f9;
+  border-left: 1px solid #ccc;
+  height: 100%;
+}
+
+.kanban-cards-wrapper {
+  padding: 10px;
+
+  .kanban-card {
+    height: 140px;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+  }
 }

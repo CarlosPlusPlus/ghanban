@@ -1,7 +1,13 @@
-<div class="column-wrapper grid">
+<div class="column-wrapper clearfix">
  <% @columns.each do |c| %>
   <div class="column">
     <p><%= c[:name] %></p>
+    <div class="kanban-cards-wrapper">
+      <% 4.times do %>
+        <div class="kanban-card">
+        </div>
+      <% end %>
+    </div>
   </div>
  <% end %>
 </div>
