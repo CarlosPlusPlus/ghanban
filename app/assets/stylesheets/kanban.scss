@@ -1,0 +1,21 @@
+@import "variables";
+@import "mixins";
+@import "wizardy";
+
+.kanban-page {
+  main {
+    padding: 0;
+  }
+}
+
+.column-wrapper {
+  @extend %grid;
+}
+
+.column-wrapper .column {
+  @extend %grid__item;
+  @extend %one-quarter;
+  background: #fff;
+  border: 1px solid #ccc;
+  min-height: 500px;
+}

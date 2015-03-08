@@ -1,5 +1,12 @@
-<h1>Board: <%= @board.name %></h1>
+<div class="column-wrapper grid">
+ <% @columns.each do |c| %>
+  <div class="column">
+    <p><%= c[:name] %></p>
+  </div>
+ <% end %>
+</div>
 
+<h1>Board: <%= @board.name %></h1>
 <% @board.users.each do |user| %>
   <h2>User: <%= user.username %></h2>
 <% end %>

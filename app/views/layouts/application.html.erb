@@ -10,7 +10,7 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body>
+<body class="<%= @class || 'empty'%>">
   <header>
     <%= render 'layouts/navigation' %>
   </header>
