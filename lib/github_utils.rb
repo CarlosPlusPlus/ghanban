@@ -70,6 +70,7 @@ module GithubUtils
       i = Issue.find_or_create_by(github_id: issue[:id])
       parse_issue(issue)
       clear_labels(i)
+      clear_custom_attributes(i)
       add_labels(issue[:labels], i) unless issue[:labels].length == 0
       i.save
     end
@@ -98,6 +99,15 @@ module GithubUtils
 
     def clear_labels(issue)
       issue.labels.clear
+    end
+
+    def clear_custom_attributes(issue)
+      ISSUE_CATEGORIES.each do |custom_category|
+        custom_category = 'issue_type' if custom_category == 'type'
+        custom_categories = {}
+        custom_categories[custom_category.to_sym] = nil
+        issue.update_attributes(custom_categories)
+      end
     end
   end
 end
