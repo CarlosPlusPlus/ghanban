@@ -1,6 +1,9 @@
 <h1>HELLO WORLD!</h1>
-<ul>
-  <% @boards.each do |board| %>
-    <li><%= link_to board.name, board %></li>
-  <% end %>
-</ul>
+
+<% if @boards %>
+  <ul>
+    <% @boards.each do |board| %>
+      <li><%= link_to board.name, board %></li>
+    <% end %>
+  </ul>
+<% end %>

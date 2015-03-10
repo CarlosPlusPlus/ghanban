@@ -1,7 +1,7 @@
 <div class="column-wrapper clearfix">
- <% @columns.each do |c| %>
+ <% @columns.each do |column| %>
   <div class="column">
-    <p><%= c[:name] %></p>
+    <p><%= column[:name] %></p>
     <div class="kanban-cards-wrapper">
       <% 4.times do %>
         <div class="kanban-card">

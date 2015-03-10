@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   def index
-    @user = current_user
-    @boards = current_user.boards
+    @boards = current_user.try(:boards)
   end
 end
