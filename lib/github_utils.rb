@@ -1,6 +1,6 @@
 module GithubUtils
-  # [TODO] CJL // 2015-03-07
-  # Split modules into individual files
+  # [TODO] CJL // 2015-03-12
+  # Moving the parse_issue method into Issue class / helper.
 
   module Client
     WEBHOOKS = ['issues', 'issue_comment']
@@ -25,18 +25,15 @@ module GithubUtils
       client.repos
     end
 
-    private
-      def client
-        @client ||= Octokit::Client.new(access_token: session[:access_token])
-        @client.auto_paginate = true
-        @client
-      end
+    # Access to Octokit client to be used by other methods.
+    def client
+      @client ||= Octokit::Client.new(access_token: session[:access_token])
+      @client.auto_paginate = true
+      @client
+    end
   end
 
   module Parser
-
-    ISSUE_CATEGORIES = ['category', 'priority', 'status', 'size', 'team', 'type']
-
     def parse_issue(issue)
       {
         :github_id         => issue[:id],
@@ -66,47 +63,14 @@ module GithubUtils
       } : {})
     end
 
-    def update_issue(issue)
-      i = Issue.find_or_create_by(github_id: issue[:id])
-      parse_issue(issue)
-      clear_labels(i)
-      clear_custom_attributes(i)
-      add_labels(issue[:labels], i) unless issue[:labels].length == 0
-      i.save
-    end
-
-    def add_labels(labels, issue)
+    def add_labels(repo_id, labels)
       labels.each do |label|
-        add_custom_attribute(label, issue)
-        issue.labels << Label.find_or_create_by(
-                        :repo_id => issue.repo_id,
-                        :name    => label[:name],
-                        :url     => label[:url],
-                        :color   => label[:color]
-                       )
-      end
-    end
-
-    def add_custom_attribute(label, issue)
-      label_type = label[:name].split(':').first
-      if ISSUE_CATEGORIES.include?(label_type)
-        label_type = 'issue_type' if label_type == 'type'
-        # [TODO] CJL // 2015-03-07
-        # Find a way to set attribute not using this notation.
-        issue[label_type.to_sym] = label[:name].split(":").last.strip
-      end
-    end
-
-    def clear_labels(issue)
-      issue.labels.clear
-    end
-
-    def clear_custom_attributes(issue)
-      ISSUE_CATEGORIES.each do |custom_category|
-        custom_category = 'issue_type' if custom_category == 'type'
-        custom_categories = {}
-        custom_categories[custom_category.to_sym] = nil
-        issue.update_attributes(custom_categories)
+        self.labels << Label.find_or_create_by(
+                          :repo_id => repo_id,
+                          :name    => label[:name],
+                          :url     => label[:url],
+                          :color   => label[:color]
+                         )
       end
     end
   end
