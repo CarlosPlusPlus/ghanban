@@ -4,12 +4,12 @@ class GithubWebhooksController < ActionController::Base
 
   def issues(payload)
     puts 'I made it into the issue webhook action!'
-    # [TODO] CJL // 2015-03-12
-    # Need to find_or_create_by: parse_issue(issue_data)
-    # Make sure that if new Issue is added to right repo.
-    issue = Issue.find_or_create_by(github_id: payload[:id])
-    update_issue(issue, payload[:labels])
-    issue.save
+    if issue = Issue.where(github_id: payload[:issue][:id]).first
+      update_issue(issue, payload[:issue][:labels])
+      issue.save
+    else
+      create_new_issue(payload)
+    end
   end
 
   def issue_comment(payload)
@@ -21,9 +21,16 @@ class GithubWebhooksController < ActionController::Base
   end
 
   private
+    def create_new_issue(payload)
+      repo  = Repo.where(name: payload[:issue][:url].split('/')[4..5].join('/')).first
+      repo.add_issues([payload[:issue]])
+      repo.save
+    end
+
     def update_issue(issue, labels)
       issue.clear_labels
       issue.clear_custom_attributes
-      issue.update_label_info(issue.repo.id, labels)
+      issue.update_label_info(issue.repo_id, labels)
+      issue.add_custom_attributes(labels)
     end
 end

@@ -15,11 +15,7 @@ class Issue < ActiveRecord::Base
     end
   end
 
-  def clear_custom_attributes(issue)
-    ISSUE_CATEGORIES.each do |custom_category|
-      custom_categories = {}
-      custom_categories[custom_category.to_sym] = nil
-      issue.update_attributes(custom_categories)
-    end
+  def clear_custom_attributes
+    ISSUE_CATEGORIES.each { |category| self[category.to_sym] = nil }
   end
 end

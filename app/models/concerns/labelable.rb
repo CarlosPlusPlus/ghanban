@@ -17,9 +17,6 @@ module Labelable
   end
 
   def update_label_info(repo_id, labels)
-    if labels.present?
-      self.add_labels(repo_id, labels)
-      self.add_custom_attributes(labels)
-    end
+    self.add_labels(repo_id, labels) if labels.present?
   end
 end
