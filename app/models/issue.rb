@@ -1,4 +1,6 @@
 class Issue < ActiveRecord::Base
+  self.inheritance_column = nil
+
   # [TODO] CJL // 2015-03-12
   # Worth moving the label methods into a concern?
   # Is Lableable something multiple classes want?
@@ -21,10 +23,6 @@ class Issue < ActiveRecord::Base
   def add_custom_attributes(labels)
     labels.each do |label|
       type, value = label[:name].split(':')
-      # [TODO] CJL // 2015-03-12
-      # Remigrate type column per the following link:
-      # ==> http://stackoverflow.com/questions/7134559/rails-use-type-column-without-sti
-      type = 'issue_type' if type == 'type'
       self[type.to_sym] = value.strip if ISSUE_CATEGORIES.include?(type)
     end
   end
