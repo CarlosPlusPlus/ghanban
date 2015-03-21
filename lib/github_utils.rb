@@ -1,7 +1,4 @@
 module GithubUtils
-  # [TODO] CJL // 2015-03-12
-  # Moving the parse_issue method into Issue class / helper.
-
   module Client
     WEBHOOKS = ['issues', 'issue_comment']
 
@@ -61,17 +58,6 @@ module GithubUtils
         :milestone_url     => issue[:milestone][:html_url],
         :milestone_title   => issue[:milestone][:title]
       } : {})
-    end
-
-    def add_labels(repo_id, labels)
-      labels.each do |label|
-        self.labels << Label.find_or_create_by(
-                          :repo_id => repo_id,
-                          :name    => label[:name],
-                          :url     => label[:url],
-                          :color   => label[:color]
-                         )
-      end
     end
   end
 end
