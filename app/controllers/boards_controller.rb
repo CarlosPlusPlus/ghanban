@@ -3,7 +3,7 @@ class BoardsController < ApplicationController
 
   def new
     @user  = current_user
-    @repos = get_repos.select { |repo| repo[:owner][:login] == current_user.username }.collect(&:full_name)
+    @repos = get_repos.select { |repo| repo[:owner][:login] == current_user.username }.map(&:full_name)
   end
 
   def show
@@ -13,16 +13,25 @@ class BoardsController < ApplicationController
   end
 
   def create
+    repos = params['board']['repos']
+
     @board = Board.new(name: params[:board][:name])
     @board.users << current_user
 
-    params['board']['repos'].each { |repo_name| add_repo(repo_name) }
+    # Create repos, add issues, and attach labels.
+    add_board_labels(repos)
+    repos.each { |repo_name| add_repo(repo_name) }
 
     @board.save
     render action: 'show'
   end
 
   private
+    def add_board_labels(repos)
+      labels = repos.map { |repo| get_labels(repo) }.flatten.group_by(&:name)
+      labels.each { |name, value| @board.labels << Label.new(name: name, color: value[0][:color]) }
+    end
+
     def add_repo(repo_name)
       repo = Repo.where(name: repo_name).first_or_create { @new_repo = true }
       initialize_new_repo(repo) if @new_repo
@@ -30,7 +39,6 @@ class BoardsController < ApplicationController
     end
 
     def initialize_new_repo(repo)
-      repo.add_labels(repo.id, get_labels(repo.name))
       repo.add_issues(get_issues(repo.name))
       add_webhooks(repo)
       @new_repo = false
