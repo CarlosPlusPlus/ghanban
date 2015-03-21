@@ -4,10 +4,10 @@ module Labelable
   def add_labels(repo_id, labels)
     labels.each do |label|
       self.labels << Label.find_or_create_by(
-                            :repo_id => repo_id,
-                            :name    => label[:name],
-                            :url     => label[:url],
-                            :color   => label[:color]
+                            repo_id: repo_id,
+                            name:    label[:name],
+                            url:     label[:url],
+                            color:   label[:color]
                           )
     end
   end
