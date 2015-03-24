@@ -29,7 +29,7 @@ TBD
 ## Code Status
 
 **Code Climate**  
-TBD
+[![Code Climate](https://codeclimate.com/github/CarlosPlusPlus/ghanban/badges/gpa.svg)](https://codeclimate.com/github/CarlosPlusPlus/ghanban)
 
 **Travis CI**  
 TBD
