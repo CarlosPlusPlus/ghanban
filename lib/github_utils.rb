@@ -41,18 +41,18 @@ module GithubUtils
     end
 
     def parse
-      hash = parse_base_attrs
-      hash.merge(parse_assignee_attrs)  if issue[:assignee]
-      hash.merge(parse_milestone_attrs) if issue[:milestone]
+      attrs = parse_base_attrs
+      attrs.merge(parse_assignee_attrs)  if issue[:assignee]
+      attrs.merge(parse_milestone_attrs) if issue[:milestone]
 
-      hash
+      attrs
     end
 
     private
 
       def parse_base_attrs
-        hash = {}.tap { |h| ROOT_ATTRS.each { |attr| h[attr] = issue[attr] }}
-        hash.merge(parse_gh_attrs)
+        base = {}.tap { |h| ROOT_ATTRS.each { |attr| h[attr] = issue[attr] }}
+        base.merge(parse_gh_attrs)
       end
 
       def parse_gh_attrs
@@ -68,18 +68,22 @@ module GithubUtils
       end
 
       def parse_assignee_attrs
+        assignee = issue[:assignee]
+
         {
-          assignee_gh_id:    issue[:assignee][:id],
-          assignee_gh_login: issue[:assignee][:login],
-          assignee_avatar:   issue[:assignee][:avatar_url]
+          assignee_avatar:   assignee[:avatar_url],
+          assignee_gh_id:    assignee[:id],
+          assignee_gh_login: assignee[:login]
         }
       end
 
       def parse_milestone_attrs
+        milestone = issue[:milestone]
+
         {
-          milestone_id:      issue[:milestone][:id],
-          milestone_url:     issue[:milestone][:html_url],
-          milestone_title:   issue[:milestone][:title]
+          milestone_id:    milestone[:id],
+          milestone_title: milestone[:title],
+          milestone_url:   milestone[:html_url]
         }
       end
   end
