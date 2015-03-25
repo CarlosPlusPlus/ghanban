@@ -3,7 +3,8 @@ class BoardsController < ApplicationController
 
   def new
     @user  = current_user
-    @repos = get_repos.select { |repo| repo[:owner][:login] == current_user.username }.collect(&:full_name)
+    @repos = get_repos.select { |repo|
+      repo[:owner][:login] == current_user.username }.collect(&:full_name)
   end
 
   def show
@@ -13,13 +14,13 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = Board.new(name: params[:board][:name])
-    @board.users << current_user
+    board = Board.new(name: params[:board][:name])
+    board.users << current_user
 
     params['board']['repos'].each { |repo_name| add_repo(repo_name) }
 
-    @board.save
-    render action: 'show'
+    board.save
+    redirect_to(board)
   end
 
   private

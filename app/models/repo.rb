@@ -1,5 +1,5 @@
  class Repo < ActiveRecord::Base
-  include GithubUtils::Parser
+  # include GithubUtils::Parser
   include Labelable
 
   has_and_belongs_to_many :boards
@@ -11,7 +11,8 @@
 
   def add_issues(issues_hash)
     issues_hash.each do |issue_data|
-      issue = Issue.new(parse_issue(issue_data))
+      parser = GithubUtils::IssueParser.new(issue_data)
+      issue  = Issue.new(parser.parse)
       issue.update_label_info(self.id, issue_data[:labels])
       self.issues << issue
     end

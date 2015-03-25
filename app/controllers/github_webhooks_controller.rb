@@ -1,6 +1,5 @@
 class GithubWebhooksController < ActionController::Base
   include GithubWebhook::Processor
-  include GithubUtils::Parser
 
   def issues(payload)
     puts 'I made it into the issue webhook action!'
