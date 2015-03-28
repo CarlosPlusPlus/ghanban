@@ -1,5 +1,6 @@
 class Boards::ColumnsController < ApplicationController
-  before_action :find_board, only: [:index, :new, :create]
+  before_action :set_board
+  before_action :set_column, only: [:show, :edit, :update, :destroy]
 
   def index
     @columns = @board.columns
@@ -24,6 +25,9 @@ class Boards::ColumnsController < ApplicationController
   end
 
   def update
+    if @column.update(columns_params)
+      redirect_to board_columns_path(@board, @column), notice: 'Column was successfully updated.'
+    end
   end
 
   def destroy
@@ -34,7 +38,11 @@ class Boards::ColumnsController < ApplicationController
       params.require(:column).permit(:board_id, :label_name)
     end
 
-    def find_board
+    def set_board
       @board = Board.find(params[:board_id])
+    end
+
+    def set_column
+      @column = @board.columns.find(params[:id])
     end
 end
