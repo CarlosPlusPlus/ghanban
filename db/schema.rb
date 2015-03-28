@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321141106) do
+ActiveRecord::Schema.define(version: 20150328161847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,21 @@ ActiveRecord::Schema.define(version: 20150321141106) do
 
   add_index "boards_users", ["board_id"], name: "index_boards_users_on_board_id", using: :btree
   add_index "boards_users", ["user_id"], name: "index_boards_users_on_user_id", using: :btree
+
+  create_table "columns", force: :cascade do |t|
+    t.integer  "board_id"
+    t.string   "label_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "columns_issues", force: :cascade do |t|
+    t.integer "column_id"
+    t.integer "issue_id"
+  end
+
+  add_index "columns_issues", ["column_id"], name: "index_columns_issues_on_column_id", using: :btree
+  add_index "columns_issues", ["issue_id"], name: "index_columns_issues_on_issue_id", using: :btree
 
   create_table "issues", force: :cascade do |t|
     t.integer  "repo_id"

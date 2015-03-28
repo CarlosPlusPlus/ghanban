@@ -1,0 +1,24 @@
+<%= form_for([@board,@column]) do |f| %>
+  <% if @column.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@column.errors.count, "error") %> prohibited this column from being saved:</h2>
+
+      <ul>
+      <% @column.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= hidden_field_tag 'column[board_id]', @board.id %>
+
+  <div class="field">
+    <%= f.label :label_name %><br />
+    <%= f.text_field :label_name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

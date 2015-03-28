@@ -1,6 +1,7 @@
 class Issue < ActiveRecord::Base
   include Labelable
 
+  has_and_belongs_to_many :columns
   has_and_belongs_to_many :labels
   belongs_to :repo
 
