@@ -19,6 +19,7 @@
 <% end %>
 
 <% @board.repos.each do |repo| %>
+  <!-- New REPO -->
   <h2>Repo: <%= repo.name %></h2>
 
   <h3>Labels</h3>
@@ -30,4 +31,5 @@
   <% repo.issues.each do |issue| %>
     <p>Issue #<%= issue.number %>: <%= issue.title %></p>
   <% end %>
+
 <% end %>
