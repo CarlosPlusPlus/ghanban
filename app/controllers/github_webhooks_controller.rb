@@ -2,7 +2,6 @@ class GithubWebhooksController < ActionController::Base
   include GithubWebhook::Processor
 
   def issues(payload)
-    puts 'I made it into the issue webhook action!'
     if issue = Issue.where(github_id: payload[:issue][:id]).first
       update_issue(issue, payload[:issue][:labels])
       issue.save

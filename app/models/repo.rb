@@ -1,5 +1,4 @@
  class Repo < ActiveRecord::Base
-  # include GithubUtils::Parser
   include Labelable
 
   has_and_belongs_to_many :boards

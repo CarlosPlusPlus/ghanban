@@ -3,8 +3,9 @@
   <div class="column">
     <p><%= column.label_name %></p>
     <div class="kanban-cards-wrapper">
-      <% 4.times do %>
+      <% column.issues.each do |issue| %>
         <div class="kanban-card">
+          <span>Issue: <%= issue.repo.name %>#<%= issue.number %>: <%= issue.title %></span>
         </div>
       <% end %>
     </div>

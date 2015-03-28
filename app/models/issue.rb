@@ -9,6 +9,9 @@ class Issue < ActiveRecord::Base
 
   ISSUE_CATEGORIES = ['category', 'priority', 'status', 'size', 'team', 'type']
 
+  after_create :update_columns
+  after_save   :update_columns
+
   def add_custom_attributes(labels)
     labels.each do |label|
       type, value = label[:name].split(':')
@@ -19,4 +22,9 @@ class Issue < ActiveRecord::Base
   def clear_custom_attributes
     ISSUE_CATEGORIES.each { |category| self[category.to_sym] = nil }
   end
+
+  private
+    def update_columns
+      repo.boards.collect(&:columns).flatten.each(&:assign_column_issues)
+    end
 end
