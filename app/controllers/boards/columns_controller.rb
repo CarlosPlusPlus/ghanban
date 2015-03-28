@@ -7,6 +7,8 @@ class Boards::ColumnsController < ApplicationController
   end
 
   def show
+    board_issues = @board.repos.collect(&:issues).flatten.reject { |i| i.state == 'closed' }
+    @issues = board_issues.select { |i| i.labels.any? { |l| l.name == @column.label_name } }
   end
 
   def new

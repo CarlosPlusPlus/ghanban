@@ -10,5 +10,14 @@
   <%= @column.label_name %>
 </p>
 
+<p>
+  <strong>Issues</strong>
+  <ul>
+    <% @issues.each do |issue| %>
+      <li>Issue: <%= issue.repo.name %>#<%= issue.number %>: <%= issue.title %></li>
+    <% end %>
+  </ul>
+</p>
+
 <%= link_to 'Edit', edit_board_column_path(@board, @column) %> |
 <%= link_to 'Back', board_columns_path %>
