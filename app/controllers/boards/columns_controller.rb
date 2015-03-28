@@ -31,6 +31,8 @@ class Boards::ColumnsController < ApplicationController
   end
 
   def destroy
+    @column.destroy
+    redirect_to board_columns_path, notice: 'Column was successfully destroyed.'
   end
 
   private

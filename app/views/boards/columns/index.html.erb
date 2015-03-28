@@ -1,5 +1,29 @@
-<ul>
-  <% @columns.each do |column| %>
-    <li>Column ID: <%= column.id %>, label_name: <%= column.label_name %></li>
-  <% end %>
-</ul>
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Columns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Label Name</th>
+      <th colspan="3">RESTful Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @columns.each do |column| %>
+      <tr>
+        <td><%= column.id %></td>
+        <td><%= column.label_name %></td>
+        <td><%= link_to 'Show', board_column_path(@board, column) %></td>
+        <td><%= link_to 'Edit', edit_board_column_path(@board, column) %></td>
+        <td><%= link_to 'Destroy', board_column_path(@board, column), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Column', new_board_column_path %>
