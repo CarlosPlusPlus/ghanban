@@ -1,17 +1,25 @@
-<div class="column-wrapper clearfix">
- <% @columns.each do |column| %>
-  <div class="column">
-    <p><%= column.label_name %></p>
-    <div class="kanban-cards-wrapper">
-      <% column.issues.each do |issue| %>
-        <div class="kanban-card">
-          <span>Issue: <%= issue.repo.name %>#<%= issue.number %>: <%= issue.title %></span>
+<% if @columns.present? %>
+  <div class="column-wrapper clearfix">
+    <% @columns.each do |column| %>
+      <div class="column">
+        <p><%= column.label_name %></p>
+        <div class="kanban-cards-wrapper">
+          <% column.issues.each do |issue| %>
+            <div class="kanban-card">
+              <span>Issue: <%= issue.repo.name %>#<%= issue.number %>: <%= issue.title %></span>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
- <% end %>
-</div>
+<% else %>
+  <div class="clearfix">
+    <p>
+      <%= link_to 'Add New Column', new_board_column_path(@board) %>
+    </p>
+  </div>
+<% end %>
 
 <!-- Need to inspect code to see this output due to FrontEnd updates. -->
 <h1>Board: <%= @board.name %></h1>

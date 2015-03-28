@@ -1,3 +1,6 @@
+<% if show_board_columns_link? %>
+  <li><%= link_to 'Columns', board_columns_path(@board) %></li>
+<% end %>
 <% if user_signed_in? %>
   <li><%= link_to 'Sign Out', signout_path %></li>
 <% else %>
