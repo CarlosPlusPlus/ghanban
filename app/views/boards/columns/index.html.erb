@@ -1,1 +1,5 @@
-I'm in the column's index page
+<ul>
+  <% @columns.each do |column| %>
+    <li>Column name: <%= column.label_name %></li>
+  <% end %>
+</ul>
