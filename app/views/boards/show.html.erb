@@ -1,7 +1,7 @@
 <div class="column-wrapper clearfix">
  <% @columns.each do |column| %>
   <div class="column">
-    <p><%= column[:name] %></p>
+    <p><%= column.label_name %></p>
     <div class="kanban-cards-wrapper">
       <% 4.times do %>
         <div class="kanban-card">
@@ -19,7 +19,6 @@
 <% end %>
 
 <% @board.repos.each do |repo| %>
-  <!-- New REPO -->
   <h2>Repo: <%= repo.name %></h2>
 
   <h3>Labels</h3>
@@ -31,5 +30,4 @@
   <% repo.issues.each do |issue| %>
     <p>Issue #<%= issue.number %>: <%= issue.title %></p>
   <% end %>
-
 <% end %>

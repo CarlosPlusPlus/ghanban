@@ -9,7 +9,7 @@ class BoardsController < ApplicationController
 
   def show
     @board   = Board.find_by_id(params[:id])
-    @columns = [{name: 'Backlog'}, {name: 'Ready'}, {name: 'In Progress'}, {name: 'Done'}]
+    @columns = @board.columns
     @class   = 'kanban-page'
   end
 

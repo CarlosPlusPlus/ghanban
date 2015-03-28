@@ -7,8 +7,7 @@ class Boards::ColumnsController < ApplicationController
   end
 
   def show
-    board_issues = @board.repos.collect(&:issues).flatten.reject { |i| i.state == 'closed' }
-    @issues = board_issues.select { |i| i.labels.any? { |l| l.name == @column.label_name } }
+    @issues = @column.issues
   end
 
   def new
@@ -17,6 +16,7 @@ class Boards::ColumnsController < ApplicationController
 
   def create
     @column = @board.columns.build(columns_params)
+    @column.assign_column_issues
 
     if @column.save
       redirect_to board_columns_path
