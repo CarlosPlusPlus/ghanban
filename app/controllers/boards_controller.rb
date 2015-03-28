@@ -14,13 +14,13 @@ class BoardsController < ApplicationController
   end
 
   def create
-    board = Board.new(name: params[:board][:name])
-    board.users << current_user
+    @board = Board.new(name: params[:board][:name])
+    @board.users << current_user
 
     params['board']['repos'].each { |repo_name| add_repo(repo_name) }
 
-    board.save
-    redirect_to(board)
+    @board.save
+    redirect_to(@board)
   end
 
   private

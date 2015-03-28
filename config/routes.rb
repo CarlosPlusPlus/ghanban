@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'pages#index'
 
-  resources :boards
+  resources :boards do 
+    resources :columns, controller: 'boards/columns'
+  end
   resources :users,  only: [:create, :show]
   resource :github_webhooks, only: :create, defaults: { formats: :json }
 
