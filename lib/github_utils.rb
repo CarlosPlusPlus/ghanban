@@ -3,7 +3,9 @@ module GithubUtils
     WEBHOOKS = ['issues', 'issue_comment']
 
     def add_webhooks(repo)
-      WEBHOOKS.each { |wh| client.subscribe "https://github.com/#{repo.name}/events/#{wh}.json", callback_url, ENV['GITHUB_WEBHOOK_SECRET'] }
+      WEBHOOKS.each { |wh| client.subscribe(
+        "https://github.com/#{repo.name}/events/#{wh}.json",
+        callback_url, ENV['GITHUB_WEBHOOK_SECRET']) }
     end
 
     def callback_url
@@ -35,6 +37,10 @@ module GithubUtils
 
     ROOT_ATTRS = [:body, :closed_at, :comments, :comments_url, :html_url,
                   :number, :state, :title, :url]
+    OPS_ATTRS  = {
+      assignee:  { avatar: :avatar_url, gh_id: :id, gh_login: :login },
+      milestone: { id: :id, title: :title, url: :html_url      }
+    }
 
     def initialize(issue)
       @issue = issue
@@ -42,20 +48,16 @@ module GithubUtils
 
     def parse
       attrs = parse_base_attrs
-      attrs.merge(parse_assignee_attrs)  if issue[:assignee]
-      attrs.merge(parse_milestone_attrs) if issue[:milestone]
-
-      attrs
+      attrs.merge(parse_github_attrs)
+      attrs.merge(parse_optional_attrs)
     end
 
     private
-
       def parse_base_attrs
-        base = {}.tap { |h| ROOT_ATTRS.each { |attr| h[attr] = issue[attr] }}
-        base.merge(parse_gh_attrs)
+        {}.tap { |h| ROOT_ATTRS.each { |attr| h[attr] = issue[attr] } }
       end
 
-      def parse_gh_attrs
+      def parse_github_attrs
         {
           github_id:         issue[:id],
           github_created_at: issue[:created_at],
@@ -67,23 +69,12 @@ module GithubUtils
         }
       end
 
-      def parse_assignee_attrs
-        assignee = issue[:assignee]
-
-        {
-          assignee_avatar:   assignee[:avatar_url],
-          assignee_gh_id:    assignee[:id],
-          assignee_gh_login: assignee[:login]
-        }
-      end
-
-      def parse_milestone_attrs
-        milestone = issue[:milestone]
-
-        {
-          milestone_id:    milestone[:id],
-          milestone_title: milestone[:title],
-          milestone_url:   milestone[:html_url]
+      def parse_optional_attrs
+        {}.tap { |h| OPS_ATTRS.each do |attr, fields|
+            if base = issue[attr]
+              fields.each { |k,v| h["#{attr}_#{k}".to_sym] = base[v] }
+            end
+          end
         }
       end
   end
